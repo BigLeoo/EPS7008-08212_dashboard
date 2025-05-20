@@ -12,27 +12,26 @@ from shiny import reactive
 from shiny.express import render, ui
 import pandas as pd
 import math
-
-data_path = Path(__file__).parent / "student_habits_performance.csv"
-students_ds = pd.read_csv(data_path)
+students_ds = pd.read_csv("student_habits_performance.csv")
 
 # ========================================================================
 
 
+
+
 def server(input: Inputs, output: Outputs, session: Session) -> None:
-    # Pega os genders diponiveis
-    genders = list(students_ds["gender"].value_counts().index)
+    genders = list(students_ds["gender"].value_counts().index) #Pega os genders diponiveis
     ui.input_checkbox_group(
-        "genders",  # Nome da variavel
-        "Genders:",  # Titulo do checkbox
-        genders,  # lista de nomes do checkbox, list[str]
-        selected=genders  # selecionara todos os checkbox passado na list[str]
+        "genders", # Nome da variavel
+         "Genders:", # Titulo do checkbox
+        genders, # lista de nomes do checkbox, list[str]
+        selected = genders # selecionara todos os checkbox passado na list[str]
     )
 
     age = students_ds["age"]
     ui.input_slider(
-        "age",  # Nome da variavel
-        label="Age (range)",  # Titulo do slider
+        "age", # Nome da variavel
+        label="Age (range)", # Titulo do slider
         min=age.min(),
         max=age.max(),
         value=[age.min(), age.max()],
@@ -40,19 +39,18 @@ def server(input: Inputs, output: Outputs, session: Session) -> None:
 
     study_hours_per_day = students_ds["study_hours_per_day"]
     ui.input_slider(
-        "study_hours_per_day",  # Nome da variavel
-        label="Study hours per day (range)",  # Titulo do slider
+        "study_hours_per_day", # Nome da variavel
+        label="Study hours per day (range)", # Titulo do slider
         min=math.floor(study_hours_per_day.min()),
         max=study_hours_per_day.max(),
         step=0.1,
-        value=[math.floor(study_hours_per_day.min()),
-               study_hours_per_day.max()],
+        value=[math.floor(study_hours_per_day.min()), study_hours_per_day.max()],
     )
 
     social_media_hours = students_ds["social_media_hours"]
     ui.input_slider(
-        "social_media_hours",  # Nome da variavel
-        label="Social media hours (range)",  # Titulo do slider
+        "social_media_hours", # Nome da variavel
+        label="Social media hours (range)", # Titulo do slider
         min=math.floor(social_media_hours.min()),
         max=social_media_hours.max(),
         step=0.1,
@@ -61,104 +59,92 @@ def server(input: Inputs, output: Outputs, session: Session) -> None:
 
     netflix_hours = students_ds["netflix_hours"]
     ui.input_slider(
-        "netflix_hours",  # Nome da variavel
-        label="Netflix hours (range)",  # Titulo do slider
+        "netflix_hours", # Nome da variavel
+        label="Netflix hours (range)", # Titulo do slider
         min=math.floor(netflix_hours.min()),
         max=netflix_hours.max(),
         step=0.1,
         value=[math.floor(netflix_hours.min()), netflix_hours.max()],
     )
 
-    part_time_job = list(
-        students_ds["part_time_job"].value_counts().index)  # Pega os valores
+    part_time_job = list(students_ds["part_time_job"].value_counts().index) #Pega os valores 
     ui.input_checkbox_group(
-        "part_time_job",  # Nome da variavel
-        "Part time job:",  # Titulo do checkbox
-        part_time_job,  # lista de nomes do checkbox, list[str]
-        # selecionara todos os checkbox passado na list[str]
-        selected=part_time_job
+        "part_time_job", # Nome da variavel
+        "Part time job:", # Titulo do checkbox
+        part_time_job, # lista de nomes do checkbox, list[str]
+        selected = part_time_job # selecionara todos os checkbox passado na list[str]
     )
 
     attendance_percentage = students_ds["attendance_percentage"]
     ui.input_slider(
-        "attendance_percentage",  # Nome da variavel
-        label="Attendance percentage (range)",  # Titulo do slider
+        "attendance_percentage", # Nome da variavel
+        label="Attendance percentage (range)", # Titulo do slider
         min=math.floor(attendance_percentage.min()),
         max=attendance_percentage.max(),
         step=0.5,
-        value=[math.floor(attendance_percentage.min()),
-               attendance_percentage.max()],
+        value=[math.floor(attendance_percentage.min()), attendance_percentage.max()],
     )
 
     sleep_hours = students_ds["sleep_hours"]
     ui.input_slider(
-        "sleep_hours",  # Nome da variavel
-        label="Sleep hours (range)",  # Titulo do slider
+        "sleep_hours", # Nome da variavel
+        label="Sleep hours (range)", # Titulo do slider
         min=math.floor(sleep_hours.min()),
         max=sleep_hours.max(),
         step=0.5,
         value=[math.floor(sleep_hours.min()), sleep_hours.max()],
     )
 
-    # Pega os valores
-    diet_quality = list(students_ds["diet_quality"].value_counts().index)
+    diet_quality = list(students_ds["diet_quality"].value_counts().index) #Pega os valores 
     ui.input_checkbox_group(
-        "diet_quality",  # Nome da variavel
-        "Diet quality:",  # Titulo do checkbox
-        diet_quality,  # lista de nomes do checkbox, list[str]
-        # selecionara todos os checkbox passado na list[str]
-        selected=diet_quality
+        "diet_quality", # Nome da variavel
+        "Diet quality:", # Titulo do checkbox
+        diet_quality, # lista de nomes do checkbox, list[str]
+        selected = diet_quality # selecionara todos os checkbox passado na list[str]
     )
 
     exercise_frequency = students_ds["exercise_frequency"]
     ui.input_slider(
-        "exercise_frequency",  # Nome da variavel
-        label="Exercise frequency per week (range)",  # Titulo do slider
+        "exercise_frequency", # Nome da variavel
+        label="Exercise frequency per week (range)", # Titulo do slider
         min=exercise_frequency.min(),
         max=exercise_frequency.max(),
         step=1,
         value=[exercise_frequency.min(), exercise_frequency.max()],
     )
 
-    parental_education_level = list(
-        students_ds["parental_education_level"].value_counts().index)
+    parental_education_level = list(students_ds["parental_education_level"].value_counts().index) 
     ui.input_checkbox_group(
-        "parental_education_level",  # Nome da variavel
-        "Parental education level:",  # Titulo do checkbox
-        parental_education_level,  # lista de nomes do checkbox, list[str]
-        # selecionara todos os checkbox passado na list[str]
-        selected=parental_education_level
+        "parental_education_level", # Nome da variavel
+        "Parental education level:", # Titulo do checkbox
+        parental_education_level, # lista de nomes do checkbox, list[str]
+        selected = parental_education_level # selecionara todos os checkbox passado na list[str]
     )
 
-    internet_quality = list(
-        students_ds["internet_quality"].value_counts().index)
+    internet_quality = list(students_ds["internet_quality"].value_counts().index) 
     ui.input_checkbox_group(
-        "internet_quality",  # Nome da variavel
-        "Internet quality:",  # Titulo do checkbox
-        internet_quality,  # lista de nomes do checkbox, list[str]
-        # selecionara todos os checkbox passado na list[str]
-        selected=internet_quality
+        "internet_quality", # Nome da variavel
+        "Internet quality:", # Titulo do checkbox
+        internet_quality, # lista de nomes do checkbox, list[str]
+        selected = internet_quality # selecionara todos os checkbox passado na list[str]
     )
 
     mental_health_rating = students_ds["mental_health_rating"]
     ui.input_slider(
-        "mental_health_rating",  # Nome da variavel
-        label="Mental health rating (range)",  # Titulo do slider
+        "mental_health_rating", # Nome da variavel
+        label="Mental health rating (range)", # Titulo do slider
         min=math.floor(mental_health_rating.min()),
         max=mental_health_rating.max(),
         step=1,
-        value=[math.floor(mental_health_rating.min()),
-               mental_health_rating.max()],
+        value=[math.floor(mental_health_rating.min()), mental_health_rating.max()],
     )
 
-    extracurricular_participation = list(
-        students_ds["extracurricular_participation"].value_counts().index)
+    extracurricular_participation = list(students_ds["extracurricular_participation"].value_counts().index) 
     ui.input_checkbox_group(
-        "extracurricular_participation",  # Nome da variavel
-        "Extracurricular participation:",  # Titulo do checkbox
-        extracurricular_participation,  # lista de nomes do checkbox, list[str]
-        # selecionara todos os checkbox passado na list[str]
-        selected=extracurricular_participation
+        "extracurricular_participation", # Nome da variavel
+        "Extracurricular participation:", # Titulo do checkbox
+        extracurricular_participation, # lista de nomes do checkbox, list[str]
+        selected = extracurricular_participation # selecionara todos os checkbox passado na list[str]
     )
 
     @reactive.calc
@@ -166,69 +152,58 @@ def server(input: Inputs, output: Outputs, session: Session) -> None:
         data = students_ds[students_ds["gender"].isin(input.genders())]
 
         age_range = input.age()
-        data = data[(data["age"] >= age_range[0]) &
-                    (data["age"] <= age_range[1])]
+        data = data[(data["age"] >= age_range[0]) & (data["age"] <= age_range[1])]
 
         study_hours_per_day_range = input.study_hours_per_day()
-        data = data[(data["study_hours_per_day"] >= study_hours_per_day_range[0]) & (
-            data["study_hours_per_day"] <= study_hours_per_day_range[1])]
+        data = data[(data["study_hours_per_day"] >= study_hours_per_day_range[0]) & (data["study_hours_per_day"] <= study_hours_per_day_range[1])]
 
         social_media_hours_range = input.social_media_hours()
-        data = data[(data["social_media_hours"] >= social_media_hours_range[0]) & (
-            data["social_media_hours"] <= social_media_hours_range[1])]
+        data = data[(data["social_media_hours"] >= social_media_hours_range[0]) & (data["social_media_hours"] <= social_media_hours_range[1])]
 
         netflix_hours_range = input.netflix_hours()
-        data = data[(data["netflix_hours"] >= netflix_hours_range[0]) & (
-            data["netflix_hours"] <= netflix_hours_range[1])]
+        data = data[(data["netflix_hours"] >= netflix_hours_range[0]) & (data["netflix_hours"] <= netflix_hours_range[1])]
 
         data = data[data["part_time_job"].isin(input.part_time_job())]
 
         attendance_percentage_range = input.attendance_percentage()
-        data = data[(data["attendance_percentage"] >= attendance_percentage_range[0]) & (
-            data["attendance_percentage"] <= attendance_percentage_range[1])]
+        data = data[(data["attendance_percentage"] >= attendance_percentage_range[0]) & (data["attendance_percentage"] <= attendance_percentage_range[1])]
 
         sleep_hours_range = input.sleep_hours()
-        data = data[(data["sleep_hours"] >= sleep_hours_range[0])
-                    & (data["sleep_hours"] <= sleep_hours_range[1])]
+        data = data[(data["sleep_hours"] >= sleep_hours_range[0]) & (data["sleep_hours"] <= sleep_hours_range[1])]
 
         data = data[data["diet_quality"].isin(input.diet_quality())]
 
         exercise_frequency_range = input.exercise_frequency()
-        data = data[(data["exercise_frequency"] >= exercise_frequency_range[0]) & (
-            data["exercise_frequency"] <= exercise_frequency_range[1])]
+        data = data[(data["exercise_frequency"] >= exercise_frequency_range[0]) & (data["exercise_frequency"] <= exercise_frequency_range[1])]
 
-        data = data[data["parental_education_level"].isin(
-            input.parental_education_level())]
+        data = data[data["parental_education_level"].isin(input.parental_education_level())]
 
         data = data[data["internet_quality"].isin(input.internet_quality())]
 
         mental_health_rating_range = input.mental_health_rating()
-        data = data[(data["mental_health_rating"] >= mental_health_rating_range[0]) & (
-            data["mental_health_rating"] <= mental_health_rating_range[1])]
+        data = data[(data["mental_health_rating"] >= mental_health_rating_range[0]) & (data["mental_health_rating"] <= mental_health_rating_range[1])]
 
-        data = data[data["extracurricular_participation"].isin(
-            input.extracurricular_participation())]
+        data = data[data["extracurricular_participation"].isin(input.extracurricular_participation())]
 
         return data
 
     # ========================================================================
 
     ui.input_select("dist", "Distribution:", choices=["kde", "hist"])
-    ui.input_checkbox("rug", "Show rug marks", value=False)
+    ui.input_checkbox("rug", "Show rug marks", value = False)
 
     # ========================================================================
 
-    my_palette = sns.diverging_palette(220, 20, s=90, l=50, n=7)
+    my_palette = sns.diverging_palette(220, 20, s=90, l=50, n=7) 
     sns.set_palette(my_palette)
-
     @render.plot
     def exam_score():
         g = sns.displot(
-            filtered_student_habits_performance(),
-            x="exam_score",
-            hue=None,
-            kind="hist",
-            fill=True,
+            filtered_student_habits_performance(), 
+            x = "exam_score",
+            hue = None, 
+            kind = "hist",
+            fill = True, 
             rug=input.rug()
         )
 
@@ -243,8 +218,8 @@ def server(input: Inputs, output: Outputs, session: Session) -> None:
         data = filtered_student_habits_performance()
 
         gender_palette = {
-            "Male": "#1f77b4",
-            "Female": "#ff7f0e",
+            "Male": "#1f77b4",   
+            "Female": "#ff7f0e", 
             "Other": "#2ca02c"
         }
 
@@ -306,8 +281,7 @@ def server(input: Inputs, output: Outputs, session: Session) -> None:
             palette=exam_score_by_exercise_pallet,
         )
 
-        g.fig.suptitle(
-            "Distribuição de Exam Score por Frequência de Exercícios")
+        g.fig.suptitle("Distribuição de Exam Score por Frequência de Exercícios")
 
         return g
 
@@ -316,7 +290,7 @@ def server(input: Inputs, output: Outputs, session: Session) -> None:
     @render.plot
     def exam_score_by_diet():
         data = filtered_student_habits_performance()
-
+   
         palette = {
             "Poor": "#1f77b4",
             "Fair": "#ff7f0e",
@@ -346,13 +320,13 @@ def server(input: Inputs, output: Outputs, session: Session) -> None:
 
     # ========================================================================
 
+
+
     return None
 
 
-_static_assets = ["dashboard_trabalho_files", "dashboard_trabalho_files/libs/quarto-html/tippy.css", "dashboard_trabalho_files/libs/quarto-html/quarto-syntax-highlighting-dark-a5cd134f9b40a21b85be3e62cd27a8fe.css", "dashboard_trabalho_files/libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css", "dashboard_trabalho_files/libs/bootstrap/bootstrap-icons.css", "dashboard_trabalho_files/libs/bootstrap/bootstrap-dark-e628e8a974d39de7074449cfdb65b4c1.min.css", "dashboard_trabalho_files/libs/bootstrap/bootstrap-e628e8a974d39de7074449cfdb65b4c1.min.css", "dashboard_trabalho_files/libs/quarto-dashboard/datatables.min.css", "dashboard_trabalho_files/libs/clipboard/clipboard.min.js", "dashboard_trabalho_files/libs/quarto-html/quarto.js",
-                  "dashboard_trabalho_files/libs/quarto-html/tabsets/tabsets.js", "dashboard_trabalho_files/libs/quarto-html/popper.min.js", "dashboard_trabalho_files/libs/quarto-html/tippy.umd.min.js", "dashboard_trabalho_files/libs/quarto-html/anchor.min.js", "dashboard_trabalho_files/libs/bootstrap/bootstrap.min.js", "dashboard_trabalho_files/libs/quarto-dashboard/quarto-dashboard.js", "dashboard_trabalho_files/libs/quarto-dashboard/stickythead.js", "dashboard_trabalho_files/libs/quarto-dashboard/datatables.min.js", "dashboard_trabalho_files/libs/quarto-dashboard/pdfmake.min.js", "dashboard_trabalho_files/libs/quarto-dashboard/vfs_fonts.js", "dashboard_trabalho_files/libs/quarto-dashboard/web-components.js", "dashboard_trabalho_files/libs/quarto-dashboard/components.js"]
-_static_assets = {
-    "/" + sa: Path(__file__).parent / sa for sa in _static_assets}
+_static_assets = ["dashboard_trabalho_files","dashboard_trabalho_files/libs/quarto-html/tippy.css","dashboard_trabalho_files/libs/quarto-html/quarto-syntax-highlighting-dark-a5cd134f9b40a21b85be3e62cd27a8fe.css","dashboard_trabalho_files/libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css","dashboard_trabalho_files/libs/bootstrap/bootstrap-icons.css","dashboard_trabalho_files/libs/bootstrap/bootstrap-dark-e628e8a974d39de7074449cfdb65b4c1.min.css","dashboard_trabalho_files/libs/bootstrap/bootstrap-e628e8a974d39de7074449cfdb65b4c1.min.css","dashboard_trabalho_files/libs/quarto-dashboard/datatables.min.css","dashboard_trabalho_files/libs/clipboard/clipboard.min.js","dashboard_trabalho_files/libs/quarto-html/quarto.js","dashboard_trabalho_files/libs/quarto-html/tabsets/tabsets.js","dashboard_trabalho_files/libs/quarto-html/popper.min.js","dashboard_trabalho_files/libs/quarto-html/tippy.umd.min.js","dashboard_trabalho_files/libs/quarto-html/anchor.min.js","dashboard_trabalho_files/libs/bootstrap/bootstrap.min.js","dashboard_trabalho_files/libs/quarto-dashboard/quarto-dashboard.js","dashboard_trabalho_files/libs/quarto-dashboard/stickythead.js","dashboard_trabalho_files/libs/quarto-dashboard/datatables.min.js","dashboard_trabalho_files/libs/quarto-dashboard/pdfmake.min.js","dashboard_trabalho_files/libs/quarto-dashboard/vfs_fonts.js","dashboard_trabalho_files/libs/quarto-dashboard/web-components.js","dashboard_trabalho_files/libs/quarto-dashboard/components.js"]
+_static_assets = {"/" + sa: Path(__file__).parent / sa for sa in _static_assets}
 
 app = App(
     Path(__file__).parent / "dashboard_trabalho.html",
